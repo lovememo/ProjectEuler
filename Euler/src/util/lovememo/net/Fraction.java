@@ -3,8 +3,8 @@ package util.lovememo.net;
 import java.math.BigInteger;
 
 public class Fraction {
-	private BigInteger numerator = BigInteger.ONE;//·Ö×Ó
-	private BigInteger denominator = BigInteger.ONE;//·ÖÄ¸	
+	private BigInteger numerator = BigInteger.ONE;//åˆ†å­
+	private BigInteger denominator = BigInteger.ONE;//åˆ†æ¯	
 	
 	public Fraction(long n) {
 		this.numerator = BigInteger.valueOf(n);
@@ -23,7 +23,7 @@ public class Fraction {
 	}
 	
 	/**
-	 * ·ÖÊıÓëÁíÒ»¸ö·ÖÊıÇóºÍ
+	 * åˆ†æ•°ä¸å¦ä¸€ä¸ªåˆ†æ•°æ±‚å’Œ
 	 * */
 	public Fraction add(Fraction f) {
 		BigInteger numerator = f.getNumerator().multiply(this.getDenominator()).add(
@@ -34,7 +34,7 @@ public class Fraction {
 	}
 	
 	/**
-	 * ·ÖÊıÓëÁíÒ»¸öÕûÊıÇóºÍ
+	 * åˆ†æ•°ä¸å¦ä¸€ä¸ªæ•´æ•°æ±‚å’Œ
 	 * */
 	public Fraction add(long n) {
 		Fraction f = new Fraction(n);
@@ -42,7 +42,7 @@ public class Fraction {
 	}
 	
 	/**
-	 * ×ªÎªµ¹Êı
+	 * è½¬ä¸ºå€’æ•°
 	 * */
 	public Fraction turnReciprocal() {
 		BigInteger tmp = this.numerator;
@@ -52,7 +52,7 @@ public class Fraction {
 	}
 	
 	/**
-	 * ´òÓ¡
+	 * æ‰“å°
 	 * */
 	public void print() {
 		System.out.println(this.toString());

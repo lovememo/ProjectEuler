@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class EulerUtil {
 	private static ArrayList<Integer> primeList = new ArrayList<Integer>();	
 	
-	/*È«ÅÅÁĞÊ±ÓÃµ½*/
+	/*å…¨æ’åˆ—æ—¶ç”¨åˆ°*/
 	private static int g_index = 0;
 	
 	/**
-	 * Ã°ÅİÅÅĞò
+	 * å†’æ³¡æ’åº
 	 */
 	public static int[] bubbleSort (int[] array) {
 		for(int i=0; i<array.length; i++) {
@@ -30,7 +30,7 @@ public class EulerUtil {
 	}
 
 	/**
-	 * ¼ÆËãÈ«ÅÅÁĞÊı
+	 * è®¡ç®—å…¨æ’åˆ—æ•°
 	 * @param m
 	 * @param n
 	 * @return P(m, n) (m>=n)
@@ -46,7 +46,7 @@ public class EulerUtil {
 	public static long C(int n, int r) {
 		return Cmn.C(n, r);
 	}
-	/*°ÑÒ»¸öÊı×ªÎªÊı×é*/
+	/*æŠŠä¸€ä¸ªæ•°è½¬ä¸ºæ•°ç»„*/
 	public static Integer[] number2Array(Integer num) {
 		int arrLength = 0;
 		int tmpNum = num;
@@ -113,7 +113,7 @@ public class EulerUtil {
 			}
 			if(retNum[i] >= 10) {
 				int tmpNum = retNum[i] / 10;
-				retNum[i+1] += tmpNum; //½øÎ»
+				retNum[i+1] += tmpNum; //è¿›ä½
 				retNum[i] = retNum[i] - tmpNum * 10;
 			}
 		}
@@ -197,7 +197,7 @@ public class EulerUtil {
 	}
 	
 	/*
-	 * »ñÈ¡×î´ó¹«Ô¼Êı
+	 * è·å–æœ€å¤§å…¬çº¦æ•°
 	 * */
 	public static int getGCD(int a, int b) {
 		int min;
@@ -211,12 +211,12 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * µİ¹éÈ«ÅÅÁĞ
+	 * é€’å½’å…¨æ’åˆ—
 	 * @author Lovememo
-	 * @param curStartIndex µİ¹é¼ÆËãÊ±ÓÃ£¬ÊµÏÖÈ«ÅÅÁĞµÄËã·¨ÊÇÖğ¸ö½»»»ÔªËØ£¬Õâ¸öÊÇ±êÖ¾µ±Ç°½»»»ÔªËØĞòºÅµÄ¡°Ö¸Õë¡±£¬µ÷ÓÃÊ±£¬´«2¼´¿É
-	 * @param numberArr ÎªÊäÈëµÄĞèÒªÈ«ÅÅÁĞµÄÊı×é
-	 * @param n Îª·µ»ØµÄÅÅÁĞÊı×éµÄ³¤¶È£¬±ÈÈç¶ÔÊäÈë³¤¶ÈÎª3µÄÊı×éÖĞ³éÈ¡2¸öÈÎÒâÔªËØ×öÅÅÁĞ£¬ÕâÊ±£¬n¾ÍÊÇÕâ¸ö2
-	 * @param retArr ÎªÈ«ÅÅÁĞÊı×é´æ·ÅµÄµØ·½
+	 * @param curStartIndex é€’å½’è®¡ç®—æ—¶ç”¨ï¼Œå®ç°å…¨æ’åˆ—çš„ç®—æ³•æ˜¯é€ä¸ªäº¤æ¢å…ƒç´ ï¼Œè¿™ä¸ªæ˜¯æ ‡å¿—å½“å‰äº¤æ¢å…ƒç´ åºå·çš„â€œæŒ‡é’ˆâ€ï¼Œè°ƒç”¨æ—¶ï¼Œä¼ 2å³å¯
+	 * @param numberArr ä¸ºè¾“å…¥çš„éœ€è¦å…¨æ’åˆ—çš„æ•°ç»„
+	 * @param n ä¸ºè¿”å›çš„æ’åˆ—æ•°ç»„çš„é•¿åº¦ï¼Œæ¯”å¦‚å¯¹è¾“å…¥é•¿åº¦ä¸º3çš„æ•°ç»„ä¸­æŠ½å–2ä¸ªä»»æ„å…ƒç´ åšæ’åˆ—ï¼Œè¿™æ—¶ï¼Œnå°±æ˜¯è¿™ä¸ª2
+	 * @param retArr ä¸ºå…¨æ’åˆ—æ•°ç»„å­˜æ”¾çš„åœ°æ–¹
 	 * */
 	private static void getPandigitalNums(int curStartIndex, int[] numberArr, int n, int[][] retArr) {
 		if(curStartIndex == n) {
@@ -238,10 +238,10 @@ public class EulerUtil {
 	
 	
 	/**
-	 * »ñÈ¡ÊäÈëÊı×éµÄÅÅÁĞÊı×é
-	 * @param arr ÊäÈëÊı×é
-	 * @param n   ÅÅÁĞÊı×é³¤¶È
-	 * @return	    ÅÅÁĞÊı×éµÄÊı×é
+	 * è·å–è¾“å…¥æ•°ç»„çš„æ’åˆ—æ•°ç»„
+	 * @param arr è¾“å…¥æ•°ç»„
+	 * @param n   æ’åˆ—æ•°ç»„é•¿åº¦
+	 * @return	    æ’åˆ—æ•°ç»„çš„æ•°ç»„
 	 */
 	public static int[][] getPermutation(int[] arr, int n) {
 		g_index = 0;
@@ -261,14 +261,14 @@ public class EulerUtil {
 	}
 	
 	public static void end(long s) {
-		System.out.println("Time used: " + (System.currentTimeMillis() - s) + "ºÁÃë£¡");
+		System.out.println("Time used: " + (System.currentTimeMillis() - s) + "æ¯«ç§’ï¼");
 	}
 	
 	public static void end() {
-		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime) + "ºÁÃë£¡");
+		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime) + "æ¯«ç§’ï¼");
 	}
 	/**
-	 * ·Ö½âÖÊÒòÊı
+	 * åˆ†è§£è´¨å› æ•°
 	 * @author Lovememo
 	 */
 	public static ArrayList getPrimeFactor(long num) {
@@ -286,7 +286,7 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÒ»¸öÕûÊıÄÜ·ñ±»¿ª·½
+	 * åˆ¤æ–­ä¸€ä¸ªæ•´æ•°èƒ½å¦è¢«å¼€æ–¹
 	 * @author Lovememo
 	 */
 	public static boolean isTwiceSquareNum(int num) {
@@ -298,7 +298,7 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÒ»¸öÕûÊıÊÇ·ñÎªÅ¼Êı
+	 * åˆ¤æ–­ä¸€ä¸ªæ•´æ•°æ˜¯å¦ä¸ºå¶æ•°
 	 * @author Lovememo
 	 */
 	public static boolean isEvenNum(int num) {
@@ -310,7 +310,7 @@ public class EulerUtil {
 	}
 
 	/**
-	 * ¶ş·Ö²éÕÒ
+	 * äºŒåˆ†æŸ¥æ‰¾
 	 * @author Lovememo
 	 * */
 	public static boolean binarySearch(long[] array, long objNum, int startIndex,
@@ -327,7 +327,7 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * ¶ş·Ö²éÕÒ
+	 * äºŒåˆ†æŸ¥æ‰¾
 	 * @author Lovememo
 	 * */
 	public static boolean binarySearch(Integer[] array, int objNum, int startIndex,
@@ -344,7 +344,7 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * ¶ş·Ö²éÕÒ
+	 * äºŒåˆ†æŸ¥æ‰¾
 	 * @author Lovememo
 	 * */
 	public static boolean binarySearch(int[] array, int objNum, int startIndex,
@@ -361,8 +361,8 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * »ñÈ¡Ğ¡ÓÚµÈÓÚnumberÏÂµÄËùÓĞËØÊı
-	 * Èç¹ûÒÑ¾­µ÷ÓÃ¹ı±¾º¯Êı£¬»¹ÊÇÏë»ñÈ¡numberÏÂµÄËùÓĞËØÊı£¬Ö±½Óµ÷ÓÃgetPrimeList()£¬Ê¡È¥¼ÆËã²½Öè¡£
+	 * è·å–å°äºç­‰äºnumberä¸‹çš„æ‰€æœ‰ç´ æ•°
+	 * å¦‚æœå·²ç»è°ƒç”¨è¿‡æœ¬å‡½æ•°ï¼Œè¿˜æ˜¯æƒ³è·å–numberä¸‹çš„æ‰€æœ‰ç´ æ•°ï¼Œç›´æ¥è°ƒç”¨getPrimeList()ï¼Œçœå»è®¡ç®—æ­¥éª¤ã€‚
 	 * @author Lovememo
 	 * */
 	public static  ArrayList<Integer> getPrimesBelow(long number) {
@@ -378,8 +378,8 @@ public class EulerUtil {
 	}
 	
 	/**
-	 * »ñÈ¡number¸öËØÊı£¨´ÓĞ¡µ½´ó£©
-	 * Èç¹ûÒÑ¾­µ÷ÓÃ¹ı±¾º¯Êı£¬»¹ÊÇÏë»ñÈ¡number¸öËØÊı£¬Ö±½Óµ÷ÓÃgetPrimeList()£¬Ê¡È¥¼ÆËã²½Öè¡£
+	 * è·å–numberä¸ªç´ æ•°ï¼ˆä»å°åˆ°å¤§ï¼‰
+	 * å¦‚æœå·²ç»è°ƒç”¨è¿‡æœ¬å‡½æ•°ï¼Œè¿˜æ˜¯æƒ³è·å–numberä¸ªç´ æ•°ï¼Œç›´æ¥è°ƒç”¨getPrimeList()ï¼Œçœå»è®¡ç®—æ­¥éª¤ã€‚
 	 * @author Lovememo
 	 * */
 	public static ArrayList<Integer> getPrimesSizeof(int number) {
@@ -474,7 +474,7 @@ public class EulerUtil {
 	}
 
 	/**
-	 *·µ»ØÒ»¸öÊı¸÷Î»µÄÖµ£¬·ÅÔÚÊı×éÄÚ
+	 *è¿”å›ä¸€ä¸ªæ•°å„ä½çš„å€¼ï¼Œæ”¾åœ¨æ•°ç»„å†…
 	 * */
 	public static long[] numberToArray(long number) {
 		int digitNumber = getDigitNum(number);
