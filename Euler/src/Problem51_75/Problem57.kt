@@ -1,7 +1,7 @@
 /**
  * Created by lovememo on 17-10-15.
  *
-Square root convergents
+Square root convergents(开根渐进分数)
 Problem 57
 It is possible to show that the square root of two can be expressed as an infinite continued fraction.
 
@@ -26,6 +26,8 @@ fun Long.digits(): Int {
     val s = this.toString()
     return s.length
 }
+
+
 
 class Fraction(val numerator: Long, val denominator: Long) {
     operator fun plus(frac: Fraction?): Fraction {
@@ -77,7 +79,7 @@ operator fun Long.plus(frac: Fraction?): Fraction {
  * 获取最小公倍数
  */
 fun lcm(a: Long, b: Long): Long {
-    return a * b / gcd(a, b)
+    return a / gcd(a, b) * b
 }
 val dataTable = mutableMapOf<Int, Fraction>()
 
@@ -98,15 +100,42 @@ fun calcSqrt2Val(n: Int): Fraction {
     return 1L + calcSub(n)
 }
 
+//////////
+/**
+ * Y0 = 3 / 2
+ * Yn = 1 + 1 / ( 2 + Yn-1 - 1)
+ * that is： Yn = （2 + Yn-1） / (1 + Yn-1)
+ * let： Yn-1 = a / b， then：
+ * Yn = (2a + b) / (a + b)
+ */
+fun Int.digits(): Int {
+    val s = this.toString()
+    return s.length
+}
+
+//b分子 a分母
+fun test(a:Double, b:Double):Boolean {
+    var aa = a.toInt()
+    var bb = b.toInt()
+    return bb.digits() > aa.digits()
+}
+
 
 fun main(args: Array<String>) {
-    dataTable.clear()
+    var nums = arrayOfNulls<Double>(1000)//numerator
+    var dens = arrayOfNulls<Double>(1000)//denominator
+    nums[0] = 3.0
+    dens[0] = 2.0
     var count = 0
-    for(n in 0..1000-1) {
-        var sqrt2 = calcSqrt2Val(n)
-        if(sqrt2.numerator.digits() > sqrt2.denominator.digits()) {
+    for(i in 1..1000-1) {
+        dens[i] = dens[i-1]!! + nums[i-1]!!
+        nums[i] = dens[i]!! + dens[i-1]!!
+        while(dens[i]!! > 10.0) {
+            dens[i] = dens[i]!! / 10.0
+            nums[i] = nums[i]!! / 10.0
+        }
+        if(test(dens[i]!!, nums[i]!!)) {
             count ++
-            println(sqrt2)
         }
     }
     println(count)
