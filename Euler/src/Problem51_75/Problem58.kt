@@ -23,12 +23,12 @@ If one complete new layer is wrapped around the spiral above, a square spiral wi
 
 val direction = arrayListOf("x" to 1, "y" to 1, "x" to -1, "y" to -1)
 
-data class Point(var x:Int, var y:Int) {
-    fun move(axis: String, step:Int): Int{
-        if(axis.toUpperCase() == "X") {
+data class Point(var x: Int, var y: Int) {
+    fun move(axis: String, step: Int): Int {
+        if (axis.toUpperCase() == "X") {
             x += step
             return x
-        } else if(axis.toUpperCase() == "Y") {
+        } else if (axis.toUpperCase() == "Y") {
             y += step
             return y
         }
@@ -36,48 +36,71 @@ data class Point(var x:Int, var y:Int) {
     }
 }
 
-fun getDiagonalNums(sideLength:Int):MutableList<Long> {
-    var diagonalNums = mutableListOf<Long>()
+fun getDiagonalNums() {
+    var diagonalNumCount = 1;
+    var primeNumCount = 0;
     var curNum = 1L
     var point = Point(0, 0)
     var dirIdx = 0
-    diagonalNums.add(curNum)
-    for(maxBoarder in 1..(sideLength - 1) / 2) {
-        while(dirIdx % 4 != 0 || dirIdx ==0) {
-            var curDirection = direction[dirIdx]
+    var maxBoarder = 1
+    while (true) {
+        while (true) {
+            var curDirection = direction[dirIdx % 4]
             var axisVal = point.move(curDirection.first, curDirection.second)
-            curNum ++
-            if(Math.abs(axisVal) == maxBoarder) {
+            curNum++
+            if (Math.abs(axisVal) == maxBoarder) {
                 dirIdx += 1//change direction
             }
             if (Math.abs(point.x) == Math.abs(point.y)) {
-                diagonalNums.add(curNum)
+                diagonalNumCount++
+                //print(curNum.toString() + " ")
+                if (EulerUtil.simpleIsPrime(curNum)) {
+                    //println("true")
+                    primeNumCount++
+                } else {
+                    //println("false")
+                }
+            }
+            if (point.x > 0 && point.y < 0 && Math.abs(point.x) == Math.abs(point.y)) {
+                dirIdx -= 1
+                var ratio = primeNumCount.toDouble() / diagonalNumCount.toDouble()
+                var sideLength = maxBoarder * 2 + 1
+                //println("sideLength: $sideLength, ratio: $ratio")
+                if (primeNumCount.toDouble() / diagonalNumCount.toDouble() < 0.1) {
+                    println(sideLength)
+                    return
+                } else {
+                    break
+                }
             }
         }
-        dirIdx = 0
+        maxBoarder++
     }
-    point.move("x", 1)
-    curNum ++
-    while(Math.abs(point.x) != Math.abs(point.y)) {
-        point.move("x", 1)
-        curNum ++
-    }
-    diagonalNums.add(curNum)
-    return diagonalNums
+    /*   point.move("x", 1)
+       curNum ++
+       while(Math.abs(point.x) != Math.abs(point.y)) {
+           point.move("x", 1)
+           curNum ++
+       }
+       diagonalNums.add(curNum)
+       return diagonalNums*/
 }
 
 fun main(args: Array<String>) {
-    println(getDiagonalNums(30))
+    //println(getDiagonalNums(10000))
+    EulerUtil.start()
+    getDiagonalNums()
+    EulerUtil.end()
 }
-fun main2(args: Array<String>) {
-    EulerUtil.isPrime(10000)
-    println("prime calc done")
-    var sideLength = 1500
+
+fun main22(args: Array<String>) {
+    //27500 26750 25750
+    /*var sideLength = 25000
     while(true) {
-        var nums = getDiagonalNums(sideLength)
+        var nums = getDiagonalNums()
         var count = 0
         for (num in nums) {
-            if (EulerUtil.isPrime(num)) {
+            if (EulerUtil.simpleIsPrime(num)) {
                 count++
             }
         }
@@ -85,9 +108,9 @@ fun main2(args: Array<String>) {
         println("ratio is $ratio, sideLength is $sideLength")
         if (ratio < 0.1) {
             println("sideLength is $sideLength")
-            //break
+            break
         }
         sideLength ++
     }
-
+*/
 }

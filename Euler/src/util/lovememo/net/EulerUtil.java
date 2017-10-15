@@ -2,13 +2,12 @@ package util.lovememo.net;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class EulerUtil {
-	private static ArrayList<Integer> primeList = new ArrayList<Integer>();	
+	public static ArrayList<Integer> primeList = new ArrayList<Integer>();
 	
 	/*全排列时用到*/
 	private static int g_index = 0;
@@ -261,11 +260,11 @@ public class EulerUtil {
 	}
 	
 	public static void end(long s) {
-		System.out.println("Time used: " + (System.currentTimeMillis() - s) + "毫秒！");
+		System.out.println("Time used: " + (System.currentTimeMillis() - s) + "ms!");
 	}
 	
 	public static void end() {
-		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime) + "毫秒！");
+		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime)/1000 + "s!");
 	}
 	/**
 	 * 分解质因数
@@ -393,6 +392,25 @@ public class EulerUtil {
 		}
 		
 		return primeList;
+	}
+	//private static Map<String, Boolean> simplePrimeMap = new HashMap();
+	public static boolean simpleIsPrime(long num) {
+		if(2 == num)
+			return true;
+		if(2 > num)
+			return false;
+		/*Boolean isPrime = simplePrimeMap.get(String.valueOf(num));
+		if(null != isPrime && isPrime) {
+			return true;
+		}*/
+		int midNum = (int)Math.sqrt(num);
+		for( int i =2; i<midNum + 1; i++) {
+			if(num % i ==0) {
+				return false;
+			}
+		}
+		//simplePrimeMap.put(String.valueOf(num), true);
+		return true;
 	}
 	
 	public static boolean isPrime(long num) {
