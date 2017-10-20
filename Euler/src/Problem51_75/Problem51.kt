@@ -26,8 +26,41 @@ fun genSequence(n: Int): MutableList<String> {
     return retList
 }
 
+val digits = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+fun getTmpNumSeq(symbolStr: String, n: Int): MutableList<String> {
+    var retList = mutableListOf<String>()
+    var curChar = symbolStr[n]
+    if (n == symbolStr.length - 1) {
+        if (curChar == '-') {
+            digits.forEach {
+                var tmpSymbolStr = symbolStr.replaceRange(n, n + 1, it.toString())
+                retList.add(tmpSymbolStr)
+            }
+        } else {
+            retList.add(symbolStr)
+        }
+        return retList
+    }
+
+    if (curChar == '-') {
+        digits.forEach {
+            var tmpSymbolStr = symbolStr.replaceRange(n, n + 1, it.toString())
+            retList.addAll(getTmpNumSeq(tmpSymbolStr, n + 1))
+        }
+    } else {
+
+        retList.addAll(getTmpNumSeq(symbolStr, n + 1))
+    }
+    return retList
+
+}
+
 fun main(args: Array<String>) {
     EulerUtil.start()
-    genSequence(10).forEach { println(it) }
+    genSequence(3).forEach { getTmpNumSeq(it, 0).forEach { println(it) } }
+
     EulerUtil.end()
+    var x = "12a3"
+    x = x.replaceRange(2, 3, "x")
+    println(x)
 }
