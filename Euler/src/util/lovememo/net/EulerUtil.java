@@ -262,9 +262,15 @@ public class EulerUtil {
 	public static void end(long s) {
 		System.out.println("Time used: " + (System.currentTimeMillis() - s) + "ms!");
 	}
-	
 	public static void end() {
-		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime)/1000 + "s!");
+		end("ms");
+	}
+	public static void end(String unit) {
+		int x = 1;
+		if("s".equals(unit)) {
+			x = 1000;
+		}
+		System.out.println("\r\nTime used: " + (System.currentTimeMillis() - startTime)/x + (x==1?"ms!":"s!"));
 	}
 	/**
 	 * 分解质因数
