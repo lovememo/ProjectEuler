@@ -15,7 +15,10 @@ being the first member of this family, is the smallest prime with this property.
 Find the smallest prime which, by replacing part of the number (not necessarily adjacent digits) with the same digit,
 is part of an eight prime value family.
  */
+
+//看到的另一个思路，先产生素数，再用“---**-*---”类似这种模式去匹配，如果匹配正确，count + 1
 val symbols = arrayOf("*", "-")
+val digits = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 
 fun genSequence(n: Int): MutableList<String> {
     if (1 == n) {
@@ -26,7 +29,25 @@ fun genSequence(n: Int): MutableList<String> {
     return retList
 }
 
-val digits = arrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+fun hit(str: String): Boolean {
+    if (str.last() in arrayOf('0', '2', '4', '5', '6', '8')) {//not prime number
+        return false
+    }
+
+    val numbers = digits.map { Integer.valueOf(str.replace(symbols[0], it.toString())).toLong() }.filter{it.toString().length == str.length}
+    val count = numbers.count { EulerUtil.simpleIsPrime(it) }
+    if (7 == count) {
+        println(numbers.filter { EulerUtil.simpleIsPrime(it) })
+    }
+    if (8 == count) {
+        println("---->>$str<<----")
+        println(numbers.filter { EulerUtil.simpleIsPrime(it) })
+        return true
+    }
+    return false
+
+}
+
 fun getTmpNumSeq(symbolStr: String, n: Int): MutableList<String> {
     var retList = mutableListOf<String>()
     var curChar = symbolStr[n]
@@ -35,9 +56,14 @@ fun getTmpNumSeq(symbolStr: String, n: Int): MutableList<String> {
             digits.forEach {
                 var tmpSymbolStr = symbolStr.replaceRange(n, n + 1, it.toString())
                 retList.add(tmpSymbolStr)
+                if (hit(tmpSymbolStr)) {
+                    return retList
+                }
             }
         } else {
             retList.add(symbolStr)
+            if (hit(symbolStr))
+                return retList
         }
         return retList
     }
@@ -57,10 +83,14 @@ fun getTmpNumSeq(symbolStr: String, n: Int): MutableList<String> {
 
 fun main(args: Array<String>) {
     EulerUtil.start()
-    genSequence(3).forEach { getTmpNumSeq(it, 0).forEach { println(it) } }
+    var n = 2
+    while (true) {
+        genSequence(n++)//generate "---**-*---" sequence
+                .forEach {
+                    getTmpNumSeq(it, 0)//generate "454**3*451" sequence
+                }
 
+    }
     EulerUtil.end()
-    var x = "12a3"
-    x = x.replaceRange(2, 3, "x")
-    println(x)
+
 }
