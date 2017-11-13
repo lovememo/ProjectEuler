@@ -35,7 +35,7 @@ public class Problem53 {
 		return ret;
 	}
 
-	/* ÓÉÖÊÊıÃİĞÎÊ½±íÊ¾µÄÁ½¸öÊıÏà³ıtop/bottom */
+	/* ç”±è´¨æ•°å¹‚å½¢å¼è¡¨ç¤ºçš„ä¸¤ä¸ªæ•°ç›¸é™¤top/bottom */
 	public static long calcResult(long[] top, long[] bottom) {
 		long result[] = top.clone();
 		long sum = 1;
@@ -51,7 +51,7 @@ public class Problem53 {
 		return sum;
 	}
 
-	/* ÃİÖ¸ÊıÏà¼Ó */
+	/* å¹‚æŒ‡æ•°ç›¸åŠ  */
 	public static long[] arrayAdd(long[] a, long[] b) {
 		long[] retArr = new long[a.length];
 		for (int i = 0; i < a.length; i++) {
@@ -75,7 +75,7 @@ public class Problem53 {
 		return top;
 	}
 
-	/* ×éºÏÊıËã·¨ */
+	/* ç»„åˆæ•°ç®—æ³• */
 	public static long C(int n, int r) {
 		long topPrimeArr[] = new long[100];
 		long bottomPrimeArr[] = new long[100];
@@ -98,7 +98,7 @@ public class Problem53 {
 		for (int i = 0; i < primeFactorTab.length; i++) {
 			long fac = primeFactorTab[i];
 			if (fac != 0) {
-				System.out.println("ÖÊÊı£º " + i + ", Ãİ£º " + fac);
+				System.out.println("è´¨æ•°ï¼š " + i + ", å¹‚ï¼š " + fac);
 			}
 		}
 	}
