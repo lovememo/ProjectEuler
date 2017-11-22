@@ -52,16 +52,12 @@ fun Array<String>.compareToAnotherPlayer(anotherArray: Array<String>): Int {
             return if (meVal > otherVal) 1 else -1
         }
     }
-
-
     return 0
 }
 
 fun Array<String>.countByCardWithIndex(index: Int): Int {
     return this.distinctBy { it[index] }.count()
 }
-
-
 
 fun Array<String>.countByCardSuit(): Int {
     return this.countByCardWithIndex(1)
@@ -138,8 +134,6 @@ fun Array<String>.calcRank(): Int = when {
 }
 
 fun main(args: Array<String>) {
-//    println(valTableMap)
-    //第一步先排序！切记
     val list = readData()
     var count = 0
     EulerUtil.start()
@@ -152,26 +146,4 @@ fun main(args: Array<String>) {
     }
     println(count)
     EulerUtil.end()
-    /*
-    player.sortByDEcedingCardValue()
-//        if (player.isRoyalFlush()) {
-        player.map { print("$it ") }
-        print("-sort-> ")
-        player.map { print("$it ") }
-
-        print(player.countByCardValue().toString() + " ")
-        print(player.countByCardSuit().toString() + " ")
-        print(player.toMapWithCardValue().toString() + " ")
-        print("isOnePair: ${player.isOnePair()} ")
-        print("isTwoPair: ${player.isTwoPair()} ")
-        println()*/
-//        }
-    /*if(it[0].isRoyalFlush() || it[1].isRoyalFlush()) {
-        print("player1: ")
-        it[0].map { print("$it ") }
-        print("player2: ")
-        it[1].map { print("$it ") }
-        println()
-    }*/
-//    }
 }

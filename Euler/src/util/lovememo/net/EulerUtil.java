@@ -409,8 +409,11 @@ public class EulerUtil {
 		if(null != isPrime && isPrime) {
 			return true;
 		}*/
+		if(num % 2 == 0) {
+			return false;
+		}
 		int midNum = (int)Math.sqrt(num);
-		for( int i =2; i<midNum + 1; i++) {
+		for( int i =3; i<midNum + 1; i+=2) {
 			if(num % i ==0) {
 				return false;
 			}
