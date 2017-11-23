@@ -3,8 +3,11 @@ package Problem51_75
 import end
 import start
 import util.lovememo.net.EulerUtil
+import util.lovememo.net.genPrimes
+import util.lovememo.net.getNextPrime
 
 /* 3, 7, 109, and 673*/
+/*[3, 7, 109, 673, 129976621]*/
 fun hit(list:MutableList<Long>, newNum:Long): Boolean {
     list.forEach {
         if(!EulerUtil.simpleIsPrime("$it$newNum".toLong())
@@ -24,6 +27,15 @@ fun hit2(list:MutableList<Long>, newNum:Long): Boolean {
     return true
 }
 
+fun hit3(list:MutableList<Long>, newNum:Long, primeArr:Array<Int>): Boolean {
+    list.forEach {
+        if(!Pair(it, newNum).isPrime(primeArr) || !Pair(newNum, it).isPrime(primeArr)) {
+            return false
+        }
+    }
+    return true
+}
+
 fun Pair<Long, Long>.isPrime():Boolean {
     val midNum = Math.sqrt("${this.first}${this.second}".toLong().toDouble()).toLong()
     if(this mod 2 == 0L) {
@@ -37,6 +49,17 @@ fun Pair<Long, Long>.isPrime():Boolean {
         i += 2
     }
     return true
+}
+
+fun Pair<Long, Long>.isPrime(primeArr:Array<Int>):Boolean {
+    val newNum = "${this.first}${this.second}".toLong()
+    if(newNum > primeArr.size.toLong() - 1) {
+        println(newNum)
+        println("maxNum:${Integer.MAX_VALUE}")
+        throw Exception("too big")
+    }
+
+    return 1 == primeArr[newNum.toInt()]
 }
 
 infix fun Pair<Long, Long>.mod(other: Long): Long {
@@ -90,33 +113,68 @@ fun genPrimePair2(list: MutableList<Long>, count: Int) {
     }
 }
 
-fun main(args: Array<String>) {
-    start()
-    val count = 5
-    val list = mutableListOf(3L)
-    val list2 = mutableListOf(3L)
-    /*start()
-    list = mutableListOf(3L)
-    genPrimePair(list, count)
-    println(list)
-    end()*/
+fun genPrimePair3(list: MutableList<Long>, count: Int, primeArr: Array<Int>) {
+        if(count == list.size) {
+            return
+        }
+        var newNum = list.last()
+        while(true) {
+            newNum = getNextPrime(newNum.toInt(), primeArr).toLong()
+            //if(hit3(list, newNum, primeArr)) {
+            //println(newNum)
+            if(hit(list, newNum)) {
+                list.add(newNum)
+                genPrimePair3(list, count, primeArr)
+                return
+            }
+        }
+}
 
+
+
+
+fun main(args: Array<String>) {
+    /*println(3+7+ 109+ 673)
+    println(792+ 129976621)
     start()
-    genPrimePair2(list2, count)
-    println(list)
+    println(EulerUtil.simpleIsPrime(3129976621L))
+    println(EulerUtil.simpleIsPrime(7129976621L))
+    println(EulerUtil.simpleIsPrime(109129976621L))
+    println(EulerUtil.simpleIsPrime(673129976621L))
+    println(EulerUtil.simpleIsPrime(1299766213L))
+    println(EulerUtil.simpleIsPrime(1299766217L))
+    println(EulerUtil.simpleIsPrime(129976621109L))
+    println(EulerUtil.simpleIsPrime(129976621673L))
+    println(EulerUtil.simpleIsPrime(129976621L))
+*/
+
+/*
+    var x = genPrimes(129977416)
+
+    println(x[129976621])
     end()
 
-    /*var x = 3L
-    var y = 3L
-    while(true) {
-        var z = "$x$y".toLong()
-        var flag1 = Pair(x, y).isPrime()
-        var flag2 = EulerUtil.simpleIsPrime(z)
-        if(flag1 != flag2) {
-            print("${Pair(x, y)}:$z --> ${flag1}  ${flag2}\r\n")
-        }
-
-        y+=2
-    }
 */
+
+    start()
+//    var x = genPrimes(200000000)
+    var x = genPrimes(40000)
+    end()
+//    start()
+//    var newNum = 129976609L
+//    newNum = getNextPrime(newNum.toInt(), x).toLong()
+//    println(EulerUtil.simpleIsPrime(129976621L))
+//    println(newNum)
+//
+//    end()
+    start()
+    val count = 4
+    var list = mutableListOf(3L)
+
+
+    genPrimePair3(list, count, x)
+    println(list)
+
+
+    end()
 }
