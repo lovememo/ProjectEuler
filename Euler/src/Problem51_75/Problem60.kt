@@ -113,18 +113,21 @@ fun genPrimePair2(list: MutableList<Long>, count: Int) {
     }
 }
 
-fun genPrimePair3(list: MutableList<Long>, count: Int, primeArr: Array<Int>) {
+fun genPrimePair3(list: MutableList<Long>, count: Int, primeArr: Array<Int>, maxPrime:Long) {
         if(count == list.size) {
             return
         }
         var newNum = list.last()
         while(true) {
+            if(newNum>maxPrime) {
+                return
+            }
             newNum = getNextPrime(newNum.toInt(), primeArr).toLong()
             //if(hit3(list, newNum, primeArr)) {
             //println(newNum)
             if(hit(list, newNum)) {
                 list.add(newNum)
-                genPrimePair3(list, count, primeArr)
+                genPrimePair3(list, count, primeArr, maxPrime)
                 return
             }
         }
@@ -158,7 +161,7 @@ fun main(args: Array<String>) {
 
     start()
 //    var x = genPrimes(200000000)
-    var x = genPrimes(40000)
+    var x = genPrimes(200000000)
     end()
 //    start()
 //    var newNum = 129976609L
@@ -168,12 +171,30 @@ fun main(args: Array<String>) {
 //
 //    end()
     start()
-    val count = 4
-    var list = mutableListOf(3L)
+    val count = 5
+    var maxPrime = 200000000L
+    for(i in 3 until x.size) {
+        if(x[i]==0) {
+            continue
+        }
+        if(i > maxPrime) {
+            return
+        }
+        start()
+        var list = mutableListOf(i.toLong())
+
+        genPrimePair3(list, count, x, maxPrime)
+        if(list.size == 5) {
+            maxPrime = if (maxPrime > list[4])  list[4] else maxPrime
+            print(list)
+            print("  ")
+            end()
+        }
 
 
-    genPrimePair3(list, count, x)
-    println(list)
+    }
+
+
 
 
     end()
