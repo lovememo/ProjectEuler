@@ -24,7 +24,33 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
  */
 
 fun main(args: Array<String>) {
-    test()
+//    test()
+    start()
+    val startNum = getFirstNumIndex()
+    val endNum = getLastNumIndex()
+    println(endNum - startNum + 1)
+    end()
+}
+
+val getFirstNumBelow = {
+    n :Int ->
+    {
+        figurate: (Int)->Int ->
+        {
+            var count = 0
+            while(figurate(++count) < n) {
+            }
+            count
+        }
+    }
+}
+
+val getFirstNumIndex = {
+    getFirstNumBelow(1000)(triangle)()
+}
+
+val getLastNumIndex = {
+    getFirstNumBelow(10000)(octagonal)() - 1
 }
 
 fun test() {
