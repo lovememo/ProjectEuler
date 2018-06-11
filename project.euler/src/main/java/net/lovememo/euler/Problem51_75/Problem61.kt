@@ -2,6 +2,7 @@ package net.lovememo.euler.Problem51_75
 
 import end
 import start
+import java.util.*
 
 /**
  * Author: lovememo
@@ -24,21 +25,35 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
  */
 
 fun main(args: Array<String>) {
-//    test()
+    test()
+}
+
+fun test() {
     start()
     val startNum = getFirstNumIndex()
     val endNum = getLastNumIndex()
-    println(endNum - startNum + 1)
+    arrayOf(
+            "triangle" to triangle,
+            "square" to square,
+            "pentagonal" to pentagonal,
+            "hexagonal" to hexagonal,
+            "heptagonal" to heptagonal,
+            "octagonal" to octagonal
+    ).forEach {
+        print("${it.first}: ")
+        val list = emptyList<Int>().toMutableList()
+        looper(startNum, endNum)(it.second, list)()
+        list.forEach { print("$it ") }
+        println()
+    }
     end()
 }
 
-val getFirstNumBelow = {
-    n :Int ->
-    {
-        figurate: (Int)->Int ->
+val getFirstNumBelow = { n: Int ->
+    { figurate: (Int) -> Int ->
         {
             var count = 0
-            while(figurate(++count) < n) {
+            while (figurate(++count) < n) {
             }
             count
         }
@@ -53,29 +68,11 @@ val getLastNumIndex = {
     getFirstNumBelow(10000)(octagonal)() - 1
 }
 
-fun test() {
-    start()
-    val figurates = arrayOf(
-            "triangle" to triangle,
-            "square" to square,
-            "pentagonal" to pentagonal,
-            "hexagonal" to hexagonal,
-            "heptagonal" to heptagonal,
-            "octagonal" to octagonal
-    )
-    figurates.forEach {
-        print("${it.first}: ")
-        looper(5)(printer(it.second))()
-        println()
-    }
-    end()
-}
-
-val looper = { count: Int ->
-    { objFun: (Int) -> Unit ->
+val looper = { start: Int, end: Int ->
+    { objFun: (Int) -> Int, list: MutableList<Int> ->
         {
-            for (i: Int in 1..count) {
-                objFun(i)
+            for (i: Int in start..end) {
+                list.add(objFun(i))
             }
         }
     }
