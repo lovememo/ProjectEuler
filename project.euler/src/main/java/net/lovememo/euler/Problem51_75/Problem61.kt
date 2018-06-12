@@ -26,54 +26,69 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 fun main(args: Array<String>) {
     start()
     val totalList = calc()
-    /*for(i in 1..totalList.size) {
-        val list = totalList.get(i)
-        val nextList = totalList.get((i + 1) % totalList.size)
-        list.forEach {
-            val lastTwoDigit = it.lastTwoDigit()
-            nextList.subListDigitStartWith(lastTwoDigit)
-        }
-    }*/
     totalList.forEach {
         it.forEach {
             print("$it ")
         }
         println()
     }
-    end()
-    for(i in 0..5) {
-        for (j in 0..totalList.get(i).size - 1) {
-            val list = emptyList<Int>().toMutableList()
-            list.add(totalList.get(i).get(j))
-            print("$i: ")
-            traversalList(totalList, list, 1 + i, 6 + i)
-        }
+    val startIndex = 0
+    val startList = totalList[startIndex]
+
+    for (j in 0 until startList.size) {
+        val list = emptyList<Int>().toMutableList()
+        list.add(startList[j])
+        var mark = Mark()
+//        mark.cache.add(startList[j])
+        mark.startIndex = startIndex
+        traversalList(totalList, list, mark)
     }
+    end()
 }
 
-fun traversalList(totalList:MutableList<MutableList<Int>>, searchTarget:MutableList<Int>, index:Int, stop:Int) {
-    if(stop == index) {
-        val searchList = totalList.get(index % 6)
+
+
+fun traversalList(totalList:MutableList<MutableList<Int>>, searchTarget:MutableList<Int>, mark:Mark) {
+    if(mark.isLast()) {
+        var index = mark.getIndex()
+        val searchList = totalList[index]
         searchTarget.forEach {
-            print("$it ")
+            //print("$it ")
+            mark.cache.add(it)
             val result = searchList.subListDigitStartWith(it.lastTwoDigit())
             if(result.size > 0) {
-                print("$result ")
+                for(num in result) {
+                    if(num.lastTwoDigit() == mark.cache[0].firstTwoDigit()) {
+                        mark.cache.add(num)
+                        println(mark.cache)
+                        println("success")
+                    }
+                }
+                mark.cache.addAll(result)
+                println(mark.cache)
                 println("success!")
                 return
             }
         }
-        println("failed")
+        //println("failed")
+        return
     }
-    val searchList = totalList.get(index % 6)
-    searchTarget.forEach {
-        print("$it ")
-        val result = searchList.subListDigitStartWith(it.lastTwoDigit())
-        if(result.size > 0) {
-            return traversalList(totalList, result, index + 1 , stop)
+    var markTemp = mark.clone()
+    while(!mark.isLast()) {
+        var index = mark.getIndex()
+        var markTempTemp = markTemp.clone()
+        markTempTemp.acquireIndex(index)
+        val searchList = totalList[index]
+        searchTarget.forEach {
+            //print("$it ")
+            markTempTemp.cache.add(it)
+            val result = searchList.subListDigitStartWith(it.lastTwoDigit())
+            if (result.size > 0) {
+                return traversalList(totalList, result, markTempTemp)
+            }
         }
+        //println("failed")
     }
-    println("failed")
 }
 
 fun Int.lastTwoDigit():Int {
@@ -128,7 +143,57 @@ val looper = { start: Int, end: Int ->
         }
     }
 }
+class Mark {
+    var startIndex:Int = -1
+    var cache:MutableList<Int> = emptyList<Int>().toMutableList()
+    fun isLast():Boolean {
+        return 5 == this.count
+    }
 
+    fun acquireIndex(index:Int) {
+//        println("acquireIndex : $index")
+        if(index == startIndex && count != 5) {
+            throw Exception("can not acquire first index")
+        }
+        if(index>5) {
+            throw IllegalArgumentException("index must be less than 6")
+        }
+        if(0 != this.array[index]) {
+            throw IllegalAccessException("index $index has been acquired")
+        }
+        this.array[index] = 1
+        this.count ++
+    }
+
+    fun getIndex():Int {
+        for(i in 0 until this.array.size) {
+            if(i == startIndex && this.count != 5) {
+                continue
+            }
+            if(0 == array[i]) {
+                count ++
+                array[i] = 1
+//                println("getIndex : $i")
+                return i
+            }
+
+        }
+        return -1
+    }
+
+    var count:Int = 0
+
+    var array = arrayOf(0, 0, 0, 0, 0, 0)
+
+    fun clone():Mark {
+        var mark = Mark()
+        mark.count = this.count
+        mark.array = this.array.clone()
+        mark.startIndex = this.startIndex
+        mark.cache.addAll(this.cache)
+        return mark
+    }
+}
 val triangle = { n: Int ->
     n * (n + 1) / 2
 }
@@ -152,3 +217,5 @@ val heptagonal = { n: Int ->
 val octagonal = { n: Int ->
     n * (3 * n - 2)
 }
+
+
