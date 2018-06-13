@@ -32,6 +32,8 @@ fun main(args: Array<String>) {
 
         end()
     }
+
+
 }
 fun Int.pow(index:Int): Long {
     return this.toDouble().pow(3).toLong()
@@ -44,11 +46,12 @@ fun MutableMap<String, MutableList<Long>>.hit(cube: Long): Boolean {
 }
 
 fun Long.getFeature(): String {
-    val feature = Array(10, {0})
-    this.toString()
-            .chars()
-            .forEach { feature[it - '0'.toInt()] ++ }
-    return feature.map{it.toString()}
-            .reduce{a, b -> "$a$b"}
+    return this.toString().toCharArray().sortedArray().joinToString("")
+//    val feature = Array(10, {0})
+//    this.toString()
+//            .chars()
+//            .forEach { feature[it - '0'.toInt()] ++ }
+//    return feature.map{it.toString()}
+//            .reduce{a, b -> "$a$b"}
 
 }
