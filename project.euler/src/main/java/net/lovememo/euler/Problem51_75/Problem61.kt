@@ -26,20 +26,19 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 fun main(args: Array<String>) {
     start()
     val totalList = calc()
-    totalList.forEach {
+    /*totalList.forEach {
         it.forEach {
             print("$it ")
         }
         println()
-    }
-    val startIndex = 0
+    }*/
+    val startIndex = 5
     val startList = totalList[startIndex]
 
     for (j in 0 until startList.size) {
         val list = emptyList<Int>().toMutableList()
         list.add(startList[j])
         var mark = Mark()
-//        mark.cache.add(startList[j])
         mark.startIndex = startIndex
         traversalList(totalList, list, mark)
     }
@@ -58,19 +57,14 @@ fun traversalList(totalList:MutableList<MutableList<Int>>, searchTarget:MutableL
             val result = searchList.subListDigitStartWith(it.lastTwoDigit())
             if(result.size > 0) {
                 for(num in result) {
-                    if(num.lastTwoDigit() == mark.cache[0].firstTwoDigit()) {
-                        mark.cache.add(num)
-                        println(mark.cache)
-                        println("success")
+                    if(num == mark.cache[0]) {
+                        print("${mark.cache} success, sum is ${mark.cache.sum()}")
+
                     }
                 }
-                mark.cache.addAll(result)
-                println(mark.cache)
-                println("success!")
                 return
             }
         }
-        //println("failed")
         return
     }
     var markTemp = mark.clone()
@@ -81,10 +75,11 @@ fun traversalList(totalList:MutableList<MutableList<Int>>, searchTarget:MutableL
         val searchList = totalList[index]
         searchTarget.forEach {
             //print("$it ")
-            markTempTemp.cache.add(it)
+            var markTempTempTemp = markTempTemp.clone()
+            markTempTempTemp.cache.add(it)
             val result = searchList.subListDigitStartWith(it.lastTwoDigit())
             if (result.size > 0) {
-                return traversalList(totalList, result, markTempTemp)
+                traversalList(totalList, result, markTempTempTemp)
             }
         }
         //println("failed")
@@ -145,18 +140,19 @@ val looper = { start: Int, end: Int ->
 }
 class Mark {
     var startIndex:Int = -1
+    val MAX_COUNT = 6
     var cache:MutableList<Int> = emptyList<Int>().toMutableList()
     fun isLast():Boolean {
-        return 5 == this.count
+        return MAX_COUNT - 1 == this.count
     }
 
     fun acquireIndex(index:Int) {
 //        println("acquireIndex : $index")
-        if(index == startIndex && count != 5) {
+        if(index == startIndex && count != MAX_COUNT - 1) {
             throw Exception("can not acquire first index")
         }
-        if(index>5) {
-            throw IllegalArgumentException("index must be less than 6")
+        if(index>MAX_COUNT - 1) {
+            throw IllegalArgumentException("index must be less than $MAX_COUNT")
         }
         if(0 != this.array[index]) {
             throw IllegalAccessException("index $index has been acquired")
@@ -167,13 +163,12 @@ class Mark {
 
     fun getIndex():Int {
         for(i in 0 until this.array.size) {
-            if(i == startIndex && this.count != 5) {
+            if(i == startIndex && this.count != MAX_COUNT - 1) {
                 continue
             }
             if(0 == array[i]) {
                 count ++
                 array[i] = 1
-//                println("getIndex : $i")
                 return i
             }
 
@@ -183,8 +178,7 @@ class Mark {
 
     var count:Int = 0
 
-    var array = arrayOf(0, 0, 0, 0, 0, 0)
-
+    var array = Array(MAX_COUNT, {0})
     fun clone():Mark {
         var mark = Mark()
         mark.count = this.count
