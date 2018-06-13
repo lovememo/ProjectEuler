@@ -36,7 +36,7 @@ fun main(args: Array<String>) {
 
 }
 fun Int.pow(index:Int): Long {
-    return this.toDouble().pow(3).toLong()
+    return this.toDouble().pow(index).toLong()
 }
 fun MutableMap<String, MutableList<Long>>.hit(cube: Long): Boolean {
     val key = cube.getFeature()
