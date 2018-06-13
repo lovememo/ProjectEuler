@@ -11,7 +11,7 @@ import kotlin.math.pow
 fun main(args: Array<String>) {
     start()
     val count = Array(10000,{it + 1})
-            .filter{Math.pow(Math.sqrt(it.toDouble()).toInt().toDouble(), 2.0) != it.toDouble()}
+            .filter{isSquare(it)}
             .map{calcPeriod(it)}
             .filter { it%2==1 }
             .count()
@@ -21,6 +21,10 @@ fun main(args: Array<String>) {
 //    arrayOf(2,3,5,6,7,8,10,11,12,13).toIntArray().filter{ x->Ma}
 //    println(calcPeriod(23))
 //    println("${start.roundPart} + $start   ${start.getFeature()}")
+}
+
+val isSquare:(Int)->Boolean = {
+    Math.pow(Math.sqrt(it.toDouble()).toInt().toDouble(), 2.0) != it.toDouble()
 }
 
 fun calcPeriod(num:Int):Int {
