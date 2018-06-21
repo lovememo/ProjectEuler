@@ -43,6 +43,16 @@ fun main(args: Array<String>) {
     val hit = result.maxBy { it.second }
     println("d is ${hit!!.first}, max x is :${hit!!.second}")
     end()
+
+    println("-------------")
+    start()
+    anotherSolution(661)
+    end()
+
+    start()
+    val (x, y) = calcSolution(calcPeriod(661).removeLast().toTypedArray())
+    print("$x $y")
+    end()
 }
 
 fun calcDsUnder(maxNum:Long): Array<Long> {
@@ -71,4 +81,35 @@ fun calcSolution(array:Array<Int>):Pair<BigInteger, BigInteger> {
         y = two * p * q
     }
     return x to y
+}
+
+fun anotherSolution(d:Int) {
+    var n1 = BigInteger.ZERO
+    var d1 = BigInteger.ONE
+    var n2 = BigInteger.ONE
+    var d2 = BigInteger.ZERO
+    var a:BigInteger
+    var b:BigInteger
+
+    while(true){
+        a = n1+n2;
+        b = d1+d2;
+        // a/b is the new candidate somewhere in the middle
+        var t = a*a - BigInteger.valueOf(d.toLong())*b*b;  // see how close a^2/b^2 is to n
+        if(t == BigInteger.ONE){ // you have your pell solution (a,b)
+            print("$a $b")
+            break
+        } else if (t == BigInteger.ZERO) { // problem, n was a square = (a/b)^2
+            print("error")
+            break;
+        } else { // not there yet - adjust low or hi bound
+            if(t > BigInteger.ZERO) {
+                n2=a
+                d2=b
+            } else {
+                n1=a
+                d1=b
+            }
+        }
+    }
 }
