@@ -1,4 +1,5 @@
 package net.lovememo.euler.Problem51_75
+
 import end
 import net.lovememo.euler.util.EulerUtil
 import start
@@ -55,16 +56,16 @@ fun main(args: Array<String>) {
     end()
 }
 
-fun calcDsUnder(maxNum:Long): Array<Long> {
-    val array = Array(maxNum.toInt(), {(it + 1).toLong()})
-    val squareArray = array.map {it * it}
-    return (array.map{it}.minus(squareArray)).toTypedArray()
+fun calcDsUnder(maxNum: Long): Array<Long> {
+    val array = Array(maxNum.toInt(), { (it + 1).toLong() })
+    val squareArray = array.map { it * it }
+    return (array.map { it }.minus(squareArray)).toTypedArray()
 }
 
-fun calcSolution(array:Array<Int>):Pair<BigInteger, BigInteger> {
-    var p = BigInteger.valueOf(array[array.size-1].toLong())
+fun calcSolution(array: Array<Int>): Pair<BigInteger, BigInteger> {
+    var p = BigInteger.valueOf(array[array.size - 1].toLong())
     var q = BigInteger.ONE
-    for( i in 0 until array.size - 1 ) {
+    for (i in 0 until array.size - 1) {
         var next = BigInteger.valueOf(array[array.size - 2 - i].toLong())
         var swap = p
         p = q
@@ -74,7 +75,7 @@ fun calcSolution(array:Array<Int>):Pair<BigInteger, BigInteger> {
     }
     var x = p
     var y = q
-    if(!EulerUtil.isEvenNum(array.size - 2)) {
+    if (!EulerUtil.isEvenNum(array.size - 2)) {
         val two = BigInteger.valueOf(2L)
         val one = BigInteger.ONE
         x = p * p * two + one
@@ -83,32 +84,32 @@ fun calcSolution(array:Array<Int>):Pair<BigInteger, BigInteger> {
     return x to y
 }
 
-fun anotherSolution(d:Int) {
+fun anotherSolution(d: Int) {
     var n1 = BigInteger.ZERO
     var d1 = BigInteger.ONE
     var n2 = BigInteger.ONE
     var d2 = BigInteger.ZERO
-    var a:BigInteger
-    var b:BigInteger
+    var a: BigInteger
+    var b: BigInteger
 
-    while(true){
-        a = n1+n2;
-        b = d1+d2;
+    while (true) {
+        a = n1 + n2
+        b = d1 + d2
         // a/b is the new candidate somewhere in the middle
-        var t = a*a - BigInteger.valueOf(d.toLong())*b*b;  // see how close a^2/b^2 is to n
-        if(t == BigInteger.ONE){ // you have your pell solution (a,b)
+        var t = a * a - BigInteger.valueOf(d.toLong()) * b * b  // see how close a^2/b^2 is to n
+        if (t == BigInteger.ONE) { // you have your pell solution (a,b)
             print("$a $b")
             break
         } else if (t == BigInteger.ZERO) { // problem, n was a square = (a/b)^2
             print("error")
-            break;
+            break
         } else { // not there yet - adjust low or hi bound
-            if(t > BigInteger.ZERO) {
-                n2=a
-                d2=b
+            if (t > BigInteger.ZERO) {
+                n2 = a
+                d2 = b
             } else {
-                n1=a
-                d1=b
+                n1 = a
+                d1 = b
             }
         }
     }
