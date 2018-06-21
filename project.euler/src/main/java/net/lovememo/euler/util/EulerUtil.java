@@ -205,6 +205,20 @@ public class EulerUtil {
 			return min;
 		return getGCD(min,remain);		
 	}
+
+	/*
+ * 获取最大公约数
+ * */
+	public static Long getGCD(Long a, Long b) {
+		Long min;
+		Long max;
+		max = a >= b ? a : b;
+		min = a + b - max;
+		Long remain = max%min;
+		if(remain == 0)
+			return min;
+		return getGCD(min,remain);
+	}
 	
 	/**
 	 * 递归全排列
@@ -286,6 +300,22 @@ public class EulerUtil {
 		factorList.add(num);
 		return factorList;
 	}
+
+	public static ArrayList<Long> getAllFactor(long num) {
+		ArrayList factorList = new ArrayList();
+		if(num == 1) {
+			return factorList;
+		}
+		for(long i=2; i<num; i++) {
+			if(num%i == 0) {
+				factorList = getAllFactor(num/i);
+				factorList.add(i);
+				return factorList;
+			}
+		}
+		factorList.add(num);
+		return factorList;
+	}
 	
 	/**
 	 * 判断一个整数能否被开方
@@ -310,6 +340,19 @@ public class EulerUtil {
 		else
 			return false;
 	}
+
+	/**
+	 * 判断一个整数是否为偶数
+	 * @author Lovememo
+	 */
+	public static boolean isEvenNum(Long num) {
+		Long tmpNum = num / 2;
+		if(num == tmpNum * 2)
+			return true;
+		else
+			return false;
+	}
+
 
 	/**
 	 * 二分查找

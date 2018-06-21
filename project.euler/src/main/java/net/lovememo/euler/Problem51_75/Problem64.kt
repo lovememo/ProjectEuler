@@ -11,11 +11,14 @@ import kotlin.math.pow
 fun main(args: Array<String>) {
     start()
     val count = Array(10000,{it + 1})
-            .filter{isSquare(it)}
+            .filter{notSquare(it)}
             .map{calcPeriod(it)}
+            .map{it.size - 1}
             .filter { it%2==1 }
             .count()
-    println(count)
+    println("count$count")
+
+    println(calcPeriod(23))
     end()
 
 //    arrayOf(2,3,5,6,7,8,10,11,12,13).toIntArray().filter{ x->Ma}
@@ -23,22 +26,31 @@ fun main(args: Array<String>) {
 //    println("${start.roundPart} + $start   ${start.getFeature()}")
 }
 
-val isSquare:(Int)->Boolean = {
+val notSquare:(Int)->Boolean = {
     Math.pow(Math.sqrt(it.toDouble()).toInt().toDouble(), 2.0) != it.toDouble()
 }
 
-fun calcPeriod(num:Int):Int {
-    val round = Math.sqrt(num.toDouble()).toInt()
-    var start = SqrtFrac(SqrtNum(num, 1, -round), SqrtNum(num,0, 1))
-    val map = emptyMap<String, Int>().toMutableMap()
-    while(!calcOnePeriod(start, map)) {}
-    return map.size
+fun <E> MutableList<E>.removeLast(): MutableList<E> {
+    this.removeAt(this.size-1)
+    return this
 }
 
-fun calcOnePeriod(frac:SqrtFrac, map:MutableMap<String,Int>): Boolean {
+fun calcPeriod(num:Int):MutableList<Int> {
+    val list = emptyList<Int>().toMutableList()
+    val round = Math.sqrt(num.toDouble()).toInt()
+    var start = SqrtFrac(SqrtNum(num, 1, -round), SqrtNum(num,0, 1))
+    start.roundPart = round
+    val map = emptyMap<String, Int>().toMutableMap()
+    while(!calcOnePeriod(start, map, list)) {}
+    return list
+}
+
+fun calcOnePeriod(frac:SqrtFrac, map:MutableMap<String,Int>, list:MutableList<Int>): Boolean {
     frac.reciprocal() //求倒
     frac.rationalize() //有理化
+    list.add(frac.roundPart)
     frac.calc()
+
     val feature = frac.getFeature()
     return if(map.containsKey(feature)) {
         true
@@ -118,7 +130,9 @@ class SqrtFrac constructor(var top: SqrtNum = SqrtNum(1, 0, 1), var bottom: Sqrt
     override fun toString(): String {
         val topStr: String = if (top.a == 0) "$top" else "($top)"
         val bottomStr: String = if (bottom.a == 0) "$bottom" else "($bottom)"
-        return "$topStr/$bottomStr"
+        val roundPart:String = if(this.roundPart != 0) "${this.roundPart} + " else ""
+
+        return "$roundPart$topStr/$bottomStr"
     }
 }
 
